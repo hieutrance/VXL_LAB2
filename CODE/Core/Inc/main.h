@@ -87,6 +87,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 void display7segLed(int num);
 void update7SEG(int index);
+void updateClockBuffer();
 
 /* USER CODE END Private defines */
 

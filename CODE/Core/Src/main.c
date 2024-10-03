@@ -156,6 +156,8 @@ void display7segLed(int num){
 
 int led_buffer[4] = {1, 2, 3, 4};
 
+int hour = 15 , minute = 8 , second = 50;
+
 void update7SEG(int index){
 	switch(index){
 	case 0:
@@ -190,6 +192,13 @@ void update7SEG(int index){
         break;
 
 	}
+}
+
+void updateClockBuffer(){
+	led_buffer[0] = hour/10;
+	led_buffer[1] = hour%10;
+	led_buffer[2] = minute/10;
+	led_buffer[3] = minute%10;
 }
 
 /* USER CODE END 0 */
@@ -232,38 +241,45 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 //
 
-//HAL_GPIO_WritePin(SEG0_GPIO_Port , SEG0_Pin ,  1 );
-//HAL_GPIO_WritePin(SEG1_GPIO_Port , SEG1_Pin ,  1 );
-//HAL_GPIO_WritePin(SEG2_GPIO_Port , SEG2_Pin ,  1 );
-//HAL_GPIO_WritePin(SEG3_GPIO_Port , SEG3_Pin ,  1 );
-//HAL_GPIO_WritePin(SEG4_GPIO_Port , SEG4_Pin ,  1 );
-//HAL_GPIO_WritePin(SEG5_GPIO_Port , SEG5_Pin ,  1 );
-//HAL_GPIO_WritePin(SEG6_GPIO_Port , SEG6_Pin ,  1 );
-//HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
-//HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
-//HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
-//HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
+
 
 HAL_GPIO_WritePin(DOT_GPIO_Port , DOT_Pin , 0);
 int index_led = 0;
 
 setTimer1(25);
+setTimer2(25);
+
   while (1)
   {
-	  if(timer1_flag == 1){
-		  update7SEG(index_led);
+	  if(timer2_flag == 1){
+		  HAL_GPIO_TogglePin(DOT_GPIO_Port , DOT_Pin);
+		  second++;
+		  		  if(second>=60){
+		  			  second = 0;
+		  			  minute++;
+		  		  }
+		  		  if(minute>=60){
+		  			  minute = 0;
+		  			  hour++;
+		  		  }
+		  		  if(hour>=24){
+		  			  hour = 0;
+		  		  }
+		  		  updateClockBuffer ();
+		  		  setTimer2(100);
 
-		  if(index_led == 0){
-			  HAL_GPIO_TogglePin(DOT_GPIO_Port , DOT_Pin);
-		  }
-		  index_led++;
-
-		  if(index_led >= 4){
-			  index_led = 0;
-		  }
-		  setTimer1(25);
 	  }
 
+
+	  if(timer1_flag == 1){
+		  setTimer1(25);
+		  update7SEG(index_led);
+		  index_led++;
+		  if(index_led >= 4){
+			 index_led=0;
+		  }
+
+	  }
 
 
     /* USER CODE END WHILE */
@@ -402,7 +418,7 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
     timerRun();
-  }
+}
 
 /* USER CODE END 4 */
 

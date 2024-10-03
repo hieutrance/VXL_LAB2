@@ -247,15 +247,13 @@ int main(void)
 HAL_GPIO_WritePin(DOT_GPIO_Port , DOT_Pin , 0);
 int index_led = 0;
 
-setTimer1(50);
+setTimer1(25);
   while (1)
   {
-
-
 	  if(timer1_flag == 1){
 		  update7SEG(index_led);
 
-		  if(index_led == 0 || index_led == 2){
+		  if(index_led == 0){
 			  HAL_GPIO_TogglePin(DOT_GPIO_Port , DOT_Pin);
 		  }
 		  index_led++;
@@ -263,7 +261,7 @@ setTimer1(50);
 		  if(index_led >= 4){
 			  index_led = 0;
 		  }
-		  setTimer1(50);
+		  setTimer1(25);
 	  }
 
 

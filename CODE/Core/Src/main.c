@@ -96,13 +96,13 @@ void display7segLed(int num){
 		HAL_GPIO_WritePin(SEG6_GPIO_Port , SEG6_Pin ,  0 );
 		break;
 	case 4:
-		HAL_GPIO_WritePin(SEG0_GPIO_Port , SEG0_Pin ,  0 );
-		HAL_GPIO_WritePin(SEG1_GPIO_Port , SEG1_Pin ,  1 );
-		HAL_GPIO_WritePin(SEG2_GPIO_Port , SEG2_Pin ,  1 );
-		HAL_GPIO_WritePin(SEG3_GPIO_Port , SEG3_Pin ,  0 );
-		HAL_GPIO_WritePin(SEG4_GPIO_Port , SEG4_Pin ,  0 );
-		HAL_GPIO_WritePin(SEG5_GPIO_Port , SEG5_Pin ,  1 );
-		HAL_GPIO_WritePin(SEG6_GPIO_Port , SEG6_Pin ,  1 );
+		HAL_GPIO_WritePin(SEG0_GPIO_Port , SEG0_Pin ,  1 );
+		HAL_GPIO_WritePin(SEG1_GPIO_Port , SEG1_Pin ,  0 );
+		HAL_GPIO_WritePin(SEG2_GPIO_Port , SEG2_Pin ,  0 );
+		HAL_GPIO_WritePin(SEG3_GPIO_Port , SEG3_Pin ,  1 );
+		HAL_GPIO_WritePin(SEG4_GPIO_Port , SEG4_Pin ,  1 );
+		HAL_GPIO_WritePin(SEG5_GPIO_Port , SEG5_Pin ,  0 );
+		HAL_GPIO_WritePin(SEG6_GPIO_Port , SEG6_Pin ,  0 );
 		break;
 	case 5:
 	      HAL_GPIO_WritePin(SEG0_GPIO_Port , SEG0_Pin , 0);
@@ -154,8 +154,6 @@ void display7segLed(int num){
 	}
 }
 
-const int MAX_LED = 4;
-int index_led = 0;
 int led_buffer[4] = {1, 2, 3, 4};
 
 void update7SEG(int index){
@@ -241,25 +239,30 @@ HAL_GPIO_WritePin(SEG3_GPIO_Port , SEG3_Pin ,  1 );
 HAL_GPIO_WritePin(SEG4_GPIO_Port , SEG4_Pin ,  1 );
 HAL_GPIO_WritePin(SEG5_GPIO_Port , SEG5_Pin ,  1 );
 HAL_GPIO_WritePin(SEG6_GPIO_Port , SEG6_Pin ,  1 );
+HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
+HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
+HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
+HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
 
-HAL_GPIO_WritePin(DOT_GPIO_Port , DOT_Pin , 1);
+HAL_GPIO_WritePin(DOT_GPIO_Port , DOT_Pin , 0);
+int index_led = 0;
 
 setTimer1(50);
   while (1)
   {
+	  if(index_led == 0 || index_led == 2){
+		  HAL_GPIO_TogglePin(DOT_GPIO_Port , DOT_Pin);
+	  }
+
 	  if(timer1_flag == 1){
-		  update7SEG(++index_led);
+		  update7SEG(index_led);
+		  index_led++;
 
 		  if(index_led >= 4){
 			  index_led = 0;
 		  }
 
-		  if(index_led == 0 || index_led == 2){
-			  HAL_GPIO_TogglePin(DOT_GPIO_Port , DOT_Pin);
-		  }
-
 		  setTimer1(50);
-
 	  }
 
 

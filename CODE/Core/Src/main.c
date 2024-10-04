@@ -310,6 +310,7 @@ int index_led = 0;
 
 setTimer1(250);
 setTimer2(250);
+setTimer0(250);
 
   while (1)
   {
@@ -340,13 +341,15 @@ setTimer2(250);
 		  if(index_led >= 4){
 			 index_led=0;
 		  }
+	  }
 
+	  if(timer0_flag == 1){
 		  updateLEDMatrix(index_led_matrix);
 		      	  ++index_led_matrix;
 		      	  if (index_led_matrix >= MAX_LED_MATRIX) {
 		      		  index_led_matrix = 0;
 		      	  }
-
+		      	  setTimer0(10);
 	  }
 
 

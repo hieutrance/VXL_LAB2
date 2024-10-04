@@ -246,8 +246,8 @@ HAL_GPIO_WritePin(DOT_GPIO_Port , DOT_Pin , 0);
 HAL_GPIO_WritePin(LED_RED_GPIO_Port , LED_RED_Pin , 0);
 int index_led = 0;
 
-setTimer1(25);
-setTimer2(25);
+setTimer1(250);
+setTimer2(250);
 
   while (1)
   {
@@ -267,13 +267,12 @@ setTimer2(25);
 		  			  hour = 0;
 		  		  }
 		  		  updateClockBuffer ();
-		  		  setTimer2(100);
+		  		  setTimer2(1000);
 
 	  }
 
-
 	  if(timer1_flag == 1){
-		  setTimer1(25);
+		  setTimer1(250);
 		  update7SEG(index_led);
 		  index_led++;
 		  if(index_led >= 4){

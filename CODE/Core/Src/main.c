@@ -155,7 +155,6 @@ void display7segLed(int num){
 }
 
 int led_buffer[4] = {1, 2, 3, 4};
-
 int hour = 15 , minute = 8 , second = 50;
 
 void update7SEG(int index){
@@ -244,6 +243,7 @@ int main(void)
 
 
 HAL_GPIO_WritePin(DOT_GPIO_Port , DOT_Pin , 0);
+HAL_GPIO_WritePin(LED_RED_GPIO_Port , LED_RED_Pin , 0);
 int index_led = 0;
 
 setTimer1(25);
@@ -253,6 +253,7 @@ setTimer2(25);
   {
 	  if(timer2_flag == 1){
 		  HAL_GPIO_TogglePin(DOT_GPIO_Port , DOT_Pin);
+		  HAL_GPIO_TogglePin(LED_RED_GPIO_Port , LED_RED_Pin);
 		  second++;
 		  		  if(second>=60){
 		  			  second = 0;

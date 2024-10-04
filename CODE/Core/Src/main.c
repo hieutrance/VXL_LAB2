@@ -267,7 +267,7 @@ setTimer2(250);
 		  			  hour = 0;
 		  		  }
 		  		  updateClockBuffer ();
-		  		  setTimer2(500);
+		  		  setTimer2(1000);
 
 	  }
 
